@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=LBC
+Comment=Linux Background Changer
+Exec=lbc
+Icon=lbc
+Terminal=false
+Type=Application
+Categories=Utilities;

@@ -1,0 +1,208 @@
+.\" Copyright (C) 2014-2020 Kevin Boone 
+.\" Permission is granted to any individual or institution to use, copy, or
+.\" redistribute this software so long as all of the original files are
+.\" included, and that this copyright notice
+.\" is retained.
+.\"
+.TH lbc 1 "June 2020"
+.SH NAME
+Linux Background Changer, LBC \- a stand-alone screen background changer for various linux desktops
+.SH SYNOPSIS
+.B lbc 
+.RB [options]\ {directories...} 
+.PP
+
+.SH EXAMPLE 
+
+.B lbc\ -i\ 60\ $HOME/pictures/backgrounds\ -m\ gnome2
+
+Uses the Gnome 2 method to switch backgrounds between images in 
+the 'backgrounds' directory every 60 seconds.
+
+
+.SH DESCRIPTION
+LBC is simple program that runs quietly in the
+background, and switches the desktop background image at a specified
+time interval. It builds a list of image files by recursively searching
+one or more directories for files whose names end in .jpg, .jpeg .png, or .gif, 
+and which do not contain the text 'thumbnail'.   
+LBC provides several different desktop
+switching methods, to accomodate different desktops. 
+ 
+.SH "BACKGROUND CHANGE METHODS"
+
+.TP
+.BI gnome-shell 
+This is the default. With this method, the program uses the command
+"gsettings set org.gnome.desktop.background picture-uri" to change
+the background. This should work on any Gnome 3 system using gnome-shell as
+the desktop manager, including Wayland-based systems.
+.LP
+
+.TP
+.BI gnome2
+This method uses the command "gconftool-2 --set 
+/desktop/gnome/background/picture_filename" This should work on Gnome 2
+and systems derived from it.
+.LP
+
+.TP
+.BI xview 
+This method uses the command "xview --onroot". Naturally, it will only
+work if xview is installed, and if the X root window is visible. The
+root window is not normally visible on Gnome and similar desktop setups, 
+because
+the desktop draws over it. However, it can sometimes be made visible
+by disabling desktop painting. This method is mostly suitable for very
+minimal X set-ups using old-fashioned window managers.
+.LP
+
+.TP
+.BI xfce4 
+This method uses \fIxfconf-query\fR to set the the backgrounds on up to two
+monitors. In principle, Xfce4 allows different backgrounds on each virtual
+desktop,
+but this program does not make use of that feature.
+.LP
+
+.TP
+.BI cmd 
+This method executes a user-supplied command, provided by the \fI--cmd\fR
+argument. The command will be executed with either one or two arguments; 
+if \fI--dual\fR is set, there will be two arguments, one for each
+image filename. Otherwise, there will be one argument. The command can carry out
+any operation. Anything it produces to standard out or standard error will be
+visible in foreground mode, otherwise the output is lost. 
+.LP
+
+.SH "OPTIONS"
+
+.TP
+.BI -a,--aspect={landscape|portrait|any} 
+Include images with the specified aspect ratio. The default is 'any'.
+.LP
+
+.TP
+.BI -d,--dirs={dir1:dir2...}
+A colon-separated list of directories to include. This option 
+is an alternative
+to listing them as plain arguments to the program, which can be
+included in a configuration file.
+.LP
+
+.TP
+.BI --dual
+Enable separate images on dual monitors, if the desktop supports it.
+\fIlbc\fR shows a warning if this feature is enabled with a background
+change method that does not support it.
+.LP
+
+.TP
+.BI -f,--foreground
+Run in the foreground, attached to console. This feature is for debugging
+-- when run in the background, no logging is produced after all the initial
+checks are made.
+.LP
+
+.TP
+.BI --help
+Show brief usage information 
+.LP
+
+.TP
+.BI -h,--height={pixels}
+Include only images of at least the specified height.
+.LP
+
+.TP
+.BI -i,--interval={seconds}
+Sets the time interval between background changes. The default is 120 
+seconds. 
+.LP
+
+.TP
+.BI --log-level={0..4}
+Sets the amount of logging from fatal errors only (0), to a huge amount
+of trace logging (4). The default level is 1. Note that logging will 
+only be seen with the \fI--foreground\fR option.
+.LP
+
+.TP
+.BI --max-files=N
+Limit the number of files stored by the program. If this limit is reached,
+\fIlbc\fR will show a warning message. The default value is 1000.
+.LP
+
+.TP
+.BI -m,--method={name}
+Sets the background changing method. See the section 'Background change
+methods' for more information.
+.LP
+
+.TP
+.BI -n,--next
+Makes a running instance of LBC switch to the next background image.
+.LP
+
+.TP
+.BI -p,--prev
+Makes a running instance of LBC switch to the previous background image.
+.LP
+
+.TP
+.BI -s,--stop
+Shut down an instance of the program running in the background.
+.LP
+
+.TP
+.BI -v,--version
+Show version number, and exit
+.LP
+
+.TP
+.BI -w,--width={pixels}
+Include only images of at least the specified width.
+.LP
+
+
+.SH "SIGNALS"
+
+\fIlbc\fR responds to the signals USR1 and USR2, by
+switching to the next and the previous background image respectively. 
+An INT signal should cause it to shut down cleanly.
+
+
+.SH BUGS AND LIMITATIONS
+
+LBC does not process images -- it simply 
+passes their filenames to the desktop. No checks are done to ensure the
+suitability of the images if finds in the directories specified, beyond
+basic checks on the filename, size, and aspect ratio. 
+In particular, the program will not attempt
+to scale or clip images; they are assumed to fit the screen at least 
+approximately. The desktop may scale or clip, and this behaviour
+may be configurable.
+
+All the image filenames found by 
+\fIlbc\fR when scanning directories are held in
+memory for the life of the program. This can use a lot of memory, and
+lead to slow start-up times, if many images are involved. However, working
+this way does have the advantage of minimizing disk activity after the 
+initial start-up period. This is potentially important if you like your
+disks to remain in the standby state when not in use. The
+\fI--max-files\fR switch can be used to limit the number of files stored.
+
+.SH "RC FILES"
+
+LBC reads \fI/etc/lbc.rc\fR and \fI$HOME/.lbc.rc\fR. Any of the
+long-form command-line arguments can be used, in the form
+'name=value'.
+
+.SH AUTHOR AND LEGAL
+LBC is maintained by Kevin Boone, and is open source under the
+terms of the GNU Public Licence, version 3.0. There is no warranty
+of any kind.
+
+
+
+.\" end of file
