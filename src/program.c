@@ -283,6 +283,7 @@ static char *program_get_lock_filename (void)
   KPath *path = kpath_new_home();
   kpath_append_utf8 (path, (UTF8 *)".lbc.pid");
   char *ret = (char *)kpath_to_utf8 (path);
+  kpath_destroy (path);
   KLOG_OUT
   return ret;
   }
