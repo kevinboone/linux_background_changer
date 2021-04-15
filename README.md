@@ -2,7 +2,7 @@
 
 A wallpaper changer for various Linux desktop environments.
 
-Version 2.0a
+Version 2.0b
 
 ## What is this?
 
@@ -267,6 +267,13 @@ However, there is a `--max-files` option to limit the memory
 usage if necessary -- or to increase it if the circumstances 
 allow.
 
+### Orientation filter
+
+An image is taken to be in "landscape" orientation if its aspect ratio
+is larger than 1.5, and portrait if it is less than 0.67. These 
+numbers are intended to include most images that can reasonably be displayed
+on a screen of the appropriate orientation.
+
 ## Limitations
 
 At present image size/aspect checks only work on JPEG files. It would be
@@ -320,6 +327,11 @@ surprisingly variable between Xfce4 releases.
 
 <b>Version 2.0a, July 2020</b><br/>
 Complete reimplementation. Introduced size/aspect ratio filters.
+<p/>
+
+
+<b>Version 2.0b, April 2021</b><br/>
+Tightened up the requirements for "portrait" and "landscape" orientation.
 <p/>
 
 

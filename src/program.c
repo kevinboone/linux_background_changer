@@ -178,9 +178,12 @@ static BOOL program_consider_file (const ProgramContext *context,
 	  {
 	  if (height == 0) height = 1; // Should never happen, but avoid / by 0
 	  double aspect = (double)width / (double)height;
-	  if ((aspect_mode == ASPECT_LANDSCAPE && aspect >= 1)
-	       || (aspect_mode == ASPECT_PORTRAIT && aspect < 1)
+	  if ((aspect_mode == ASPECT_LANDSCAPE && aspect >= 1.5)
+	       || (aspect_mode == ASPECT_PORTRAIT && aspect < 0.66)
 	       || (aspect_mode == ASPECT_ANY))
+	  //if ((aspect_mode == ASPECT_LANDSCAPE && aspect >= 1)
+	  //     || (aspect_mode == ASPECT_PORTRAIT && aspect < 1)
+	   //    || (aspect_mode == ASPECT_ANY))
 	    {
 	    ret = TRUE;
 	    }
