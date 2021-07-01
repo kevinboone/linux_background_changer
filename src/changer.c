@@ -446,7 +446,10 @@ void changer_run (Changer *self)
   int ticks = 0;
   while (!quit)
     {
-    usleep(1000000);
+    // Note that some Unix-like systems don't handle usleep() with
+    //   very large values, hence the loop
+    for (int i = 0; i < 10; i++)
+      usleep(100000);
     sigpending (&waiting_mask);
     if (sigismember (&waiting_mask, SIGINT) ||
         sigismember (&waiting_mask, SIGUSR1) ||

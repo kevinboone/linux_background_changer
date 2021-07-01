@@ -12,14 +12,14 @@ DESTDIR   := /
 PREFIX    := /usr
 BINDIR    := $(DESTDIR)/$(PREFIX)/bin
 MANDIR    := $(DESTDIR)/$(PREFIX)/share/man/man1/
-CFLAGS    := -g -O0 -fpie -fpic -Wall -Werror -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I $(KLIB_INC) ${EXTRA_CFLAGS} -ffunction-sections -fdata-sections
+CFLAGS    := -g -O0 -fpie -fpic -Wall -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I $(KLIB_INC) ${EXTRA_CFLAGS} -ffunction-sections -fdata-sections
 
 LDFLAGS :=  -pie -Wl,--gc-sections ${EXTRA_LDFLAGS}
 
 $(TARGET): $(OBJECTS) 
 	echo $(SOURCES)
 	make -C klib
-	$(CC) $(LDFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS) $(KLIB)/klib.a 
+	$(CC) $(LDFLAGS) -o $(TARGET) $(OBJECTS) $(KLIB)/klib.a $(LIBS) 
 
 build/%.o: src/%.c
 	@mkdir -p build/
@@ -27,7 +27,7 @@ build/%.o: src/%.c
 
 clean:
 	$(RM) -r build/ $(TARGET) 
-	make -C klib clean
+	gmake -C klib clean
 
 install: $(TARGET)
 	mkdir -p $(BINDIR) 

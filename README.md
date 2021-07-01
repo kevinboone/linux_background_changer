@@ -1,6 +1,6 @@
 # LBC (Linux background changer)
 
-A wallpaper changer for various Linux desktop environments.
+A wallpaper changer for various Linux (and NetBSD) desktop environments.
 
 Version 2.0b
 
@@ -18,6 +18,11 @@ built into most desktops, for a number of reasons.
 - it uses a simple, text-based configuration file, or just command-line
   options.
 
+Note that I wrote LBC for Linux, but it also works to some extent with
+NetBSD. FOr example, if you're running the XFCE4 desktop, you can use
+LBC with the "-m xfce4" option. I do not know if any of the other
+screen-changing methods work with NetBSD.
+
 ## Example
 
     $ lbc --method gnome2 --width 1024 --aspect landscape $HOME/Pictures/
@@ -32,7 +37,7 @@ default number of images (1000) will be included.
 
 ### Compile-time dependencies
 
-Just the development headers for `libjpeg`:
+Just the development headers for `libjpeg`. E.g.:
 
     # apt-get install jpeglib-dev
 
@@ -61,6 +66,9 @@ a matter of:
 
 Note that I wrote LBC specifically for Linux, and intend it to be 
 compiled using `gcc`. It uses `gcc`-specific C library extensions.
+To compile on NetBSD, you'll need to invoke `gmake` specifically,
+rather than `make`, as the Makefile uses GNU templates. Of course,
+this means you'll need to install `gmake` (e.g., `pkgin -y install gmake`).
 
 ## Command-line options
 
