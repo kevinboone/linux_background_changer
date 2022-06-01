@@ -284,6 +284,14 @@ on a screen of the appropriate orientation.
 
 ## Limitations
 
+As of June 2022, this utility does not work with the latest 
+gnome-shell versions that have a "Dark" mode. The command that sets the
+background appears to work, but it has no effect. I presume that this
+is a bug in gnome-shell but, since the maintainers have never
+documented a way to change the background other than using the settings
+GUI, I guess it could be argued that it isn't a bug. Whatever the
+position, it doesn't work. It seems to work fine in "Light" mode.
+
 At present image size/aspect checks only work on JPEG files. It would be
 easy enough to extend it to cover other image types -- at the cost
 of increasing the number of dependencies the program has -- but I don't
