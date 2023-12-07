@@ -275,17 +275,29 @@ void changer_method_gnome_shell (const Changer *self)
 
   char *filename = (char *)kpath_to_utf8 (img_path);
 
-  char *cmd;
-  asprintf (&cmd, "GSETTINGS_BACKEND=dconf gsettings"
+  char *cmd1;
+  asprintf (&cmd1, "GSETTINGS_BACKEND=dconf gsettings"
         " set org.gnome.desktop.background picture-uri \"file://%s\"",
        filename);
 
-  if (system (cmd) != 0)
+  if (system (cmd1) != 0)
     {
-    klog_error (KLOG_CLASS, "Error executing command '%s'", cmd);
+    klog_error (KLOG_CLASS, "Error executing command '%s'", cmd1);
     }
 
-  free (cmd);
+  free (cmd1);
+
+  char *cmd2;
+  asprintf (&cmd2, "GSETTINGS_BACKEND=dconf gsettings"
+        " set org.gnome.desktop.background picture-uri-dark \"file://%s\"",
+       filename);
+
+  if (system (cmd2) != 0)
+    {
+    klog_error (KLOG_CLASS, "Error executing command '%s'", cmd2);
+    }
+
+  free (cmd2);
   free (filename);
  
   KLOG_OUT

@@ -2,7 +2,7 @@
 
 A wallpaper changer for various Linux (and NetBSD) desktop environments.
 
-Version 2.0b
+Version 2.0c
 
 ## What is this?
 
@@ -348,6 +348,10 @@ Complete reimplementation. Introduced size/aspect ratio filters.
 
 <b>Version 2.0b, April 2021</b><br/>
 Tightened up the requirements for "portrait" and "landscape" orientation.
+<p/>
+
+<b>Version 2.0c, December 2023</b><br/>
+Changed the gnome-shell method to set both dark and light themes.
 <p/>
 
 
