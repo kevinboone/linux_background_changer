@@ -2,7 +2,7 @@
 
 A wallpaper changer for various Linux (and NetBSD) desktop environments.
 
-Version 2.0c
+Version 2.0d
 
 ## What is this?
 
@@ -71,6 +71,9 @@ rather than `make`, as the Makefile uses GNU templates. Of course,
 this means you'll need to install `gmake` (e.g., `pkgin -y install gmake`).
 
 ## Command-line options
+
+All command-line options can also be given in the RC file (see below),
+using the long form of the name.
 
 *-a,--aspect={landscape|portrait|any}*
 
@@ -178,7 +181,7 @@ root window is not normally visible on Gnome and similar desktop setups,
 because
 the desktop draws over it. However, it can sometimes be made visible
 by disabling desktop painting. This method is mostly suitable for very
-minimal X set-ups using old-fashioned window managers.
+minimal X set-ups using old-fashioned window managers like `twm`.
 
 ### xfce4 
 
@@ -270,7 +273,7 @@ LBC stores the complete list of image filenames in memory. Worse,
 it stores those filenames with wide-character representation.
 A list of a thousand files could consume about half a megabyte of
 memory. 
-This is a nugatory sum in a modern desktop system, or even a Raspberry Pi.
+This is a nugatory amount in a modern desktop system, or even a Raspberry Pi.
 However, there is a `--max-files` option to limit the memory
 usage if necessary -- or to increase it if the circumstances 
 allow.
@@ -283,14 +286,6 @@ numbers are intended to include most images that can reasonably be displayed
 on a screen of the appropriate orientation.
 
 ## Limitations
-
-As of June 2022, this utility does not work with the latest 
-gnome-shell versions that have a "Dark" mode. The command that sets the
-background appears to work, but it has no effect. I presume that this
-is a bug in gnome-shell but, since the maintainers have never
-documented a way to change the background other than using the settings
-GUI, I guess it could be argued that it isn't a bug. Whatever the
-position, it doesn't work. It seems to work fine in "Light" mode.
 
 At present image size/aspect checks only work on JPEG files. It would be
 easy enough to extend it to cover other image types -- at the cost
@@ -354,5 +349,12 @@ Tightened up the requirements for "portrait" and "landscape" orientation.
 Changed the gnome-shell method to set both dark and light themes.
 <p/>
 
+<b>Version 2.0d, June 2024</b><br/>
+Removed position-independet code flags from defaults. Few, if any,
+platforms now require these. They can be added by using the 
+`EXTRA_CFLAGS` and `EXTRA_LDFLAGS` env vars if necessary. Some minor
+documentation fixes. Tidied up the compiler settings to remove pointless
+warning messages.
+<p/>
 
 

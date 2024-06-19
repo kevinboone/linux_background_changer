@@ -5,8 +5,8 @@ TARGET	:= $(NAME).a
 SOURCES := $(shell find src/ -type f -name *.c)
 OBJECTS := $(patsubst src/%,build/%,$(SOURCES:.c=.o))
 DEPS	:= $(OBJECTS:.o=.deps)
-CFLAGS  := -g -O3 -fpie -fpic -Wall -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DSHARE=\"$(SHARE)\" -DPREFIX=\"$(PREFIX)\" -I include ${EXTRA_CFLAGS}
-LDFLAGS := -pie ${EXTRA_LDFLAGS} -ffunction-sections -fdata-sections
+EXTRA_CFLAGS ?=
+CFLAGS  := -g -O3 -Wall -Wno-unused-result -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DSHARE=\"$(SHARE)\" -DPREFIX=\"$(PREFIX)\" -I include ${EXTRA_CFLAGS}
 
 $(TARGET): $(OBJECTS) 
 	$(AR) -r $(TARGET) $(OBJECTS)	

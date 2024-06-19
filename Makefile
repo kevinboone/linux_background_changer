@@ -1,5 +1,5 @@
 NAME      := lbc
-VERSION   := 2.0c
+VERSION   := 2.0d
 LIBS      := -ljpeg -lm ${EXTRA_LIBS} 
 KLIB      := klib
 KLIB_INC  := $(KLIB)/include
@@ -12,9 +12,11 @@ DESTDIR   := /
 PREFIX    := /usr
 BINDIR    := $(DESTDIR)/$(PREFIX)/bin
 MANDIR    := $(DESTDIR)/$(PREFIX)/share/man/man1/
-CFLAGS    := -g -O0 -fpie -fpic -Wall -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I $(KLIB_INC) ${EXTRA_CFLAGS} -ffunction-sections -fdata-sections
+EXTRA_CFLAGS ?=
+EXTRA_LDFLAGS ?=
+CFLAGS    := -g -O0 -Wall -Wno-unused-value -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I $(KLIB_INC) ${EXTRA_CFLAGS} -ffunction-sections -fdata-sections
 
-LDFLAGS :=  -pie -Wl,--gc-sections ${EXTRA_LDFLAGS}
+LDFLAGS := -s -Wl,--gc-sections ${EXTRA_LDFLAGS}
 
 $(TARGET): $(OBJECTS) 
 	echo $(SOURCES)

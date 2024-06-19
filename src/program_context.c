@@ -4,7 +4,7 @@
   
   programcontext.c
 
-  Copyright (c)1990-2020 Kevin Boone. Distributed under the terms of the
+  Copyright (c)1990-2024 Kevin Boone. Distributed under the terms of the
   GNU Public Licence, v3.0
 
   ==========================================================================*/
@@ -335,7 +335,7 @@ BOOL program_context_parse_command_line (ProgramContext *self,
   if (PCGB (self, "show-version", FALSE))
     {
     printf ("%s: %s version %s\n", argv[0], NAME, VERSION);
-    printf ("Copyright (c)2020 Kevin Boone\n");
+    printf ("Copyright (c)2024 Kevin Boone\n");
     printf ("Distributed under the terms of the GPL v3.0\n");
     ret = FALSE;
     }
