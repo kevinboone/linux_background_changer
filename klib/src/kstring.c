@@ -212,7 +212,7 @@ void kstring_append_utf8 (KString *self, const UTF8 *s)
 void kstring_append_utf32 (KString *self, const UTF32 *s)
   {
   KLOG_IN
-  kstring_append_utf32 (self, s);
+  // Not implemented in this application
   KLOG_OUT
   }
 

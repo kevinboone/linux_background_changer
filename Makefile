@@ -14,7 +14,7 @@ BINDIR    := $(DESTDIR)/$(PREFIX)/bin
 MANDIR    := $(DESTDIR)/$(PREFIX)/share/man/man1/
 EXTRA_CFLAGS ?=
 EXTRA_LDFLAGS ?=
-CFLAGS    := -g -O0 -Wall -Wno-unused-value -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I $(KLIB_INC) ${EXTRA_CFLAGS} -ffunction-sections -fdata-sections
+CFLAGS    := -g -O0 -Wall -Wno-unused-result -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" -I $(KLIB_INC) ${EXTRA_CFLAGS} -ffunction-sections -fdata-sections
 
 LDFLAGS := -s -Wl,--gc-sections ${EXTRA_LDFLAGS}
 
@@ -31,11 +31,11 @@ clean:
 	$(RM) -r build/ $(TARGET) 
 	gmake -C klib clean
 
-install: $(TARGET)
+install: 
 	mkdir -p $(BINDIR) 
 	strip $(TARGET)
-	install -m 755 $(TARGET) ${BINDIR}
-	install -m 644 man1/* $(MANDIR)
+	install -D -m 755 $(TARGET) ${BINDIR}
+	install -D -m 644 man1/lbc.1 $(MANDIR)/lbc.1
 
 -include $(DEPS)
 
