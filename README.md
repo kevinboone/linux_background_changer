@@ -2,24 +2,29 @@
 
 A wallpaper changer for various Linux (and NetBSD) desktop environments.
 
-Version 2.0d
+Version 2.0e, December 2024
 
 ## What is this?
 
-LBC is a simple utility that runs quietly in the background and,
-at regular intervals, instructs the Linux desktop environment to change the
-background (wallpaper) image. LBC is more flexible than the mechanisms
+LBC is a simple utility that runs quietly in the background and, at regular
+intervals, instructs the Linux desktop environment to or window manager to
+cange the background (wallpaper) image. It supports a number of different
+desktop environments and window managers.
+
+LBC is more flexible than the mechanisms
 built into most desktops, for a number of reasons.
 
 - LBC allows recursive directory searches, or arbitrary lists of files 
   and directories, or any combination of these;
 - it allows some control over what kind of images to include. For example,
-  you can avoid putting potrait-orientation images on a landscape screen;
+  you can avoid putting portrait-orientation images on a landscape screen;
 - it uses a simple, text-based configuration file, or just command-line
   options.
+- For desktops that allow it (e.g., Xfce4) LBC can put different images
+  on different monitors.
 
 Note that I wrote LBC for Linux, but it also works to some extent with
-NetBSD. FOr example, if you're running the XFCE4 desktop, you can use
+NetBSD. For example, if you're running the Xfce4 desktop, you can use
 LBC with the "-m xfce4" option. I do not know if any of the other
 screen-changing methods work with NetBSD.
 
@@ -30,7 +35,7 @@ screen-changing methods work with NetBSD.
 Use images in `$HOME/Pictures` and all its subdirectories,
 that are in landscape aspect
 ratio, at least 1024 pixels wide. Use the `gnome2` background method.
-Change interval remains at the default of two minutes. Up to the
+The change interval remains at the default of two minutes. Up to the
 default number of images (1000) will be included.
 
 ## Dependencies
@@ -47,12 +52,13 @@ To support _all_ the various background-changing methods, you will
 need:
 
 - `xview` (`apt-get install xloadimage`) (for the `xview` method)
+- `feh` (`apt-get install feh`) (for the `feh` method)
 - `xfconf-query` (for Xfce4 support)
 - `gsettings` (for Gnome 3)
 - `gconftool-2` (for Gnome 2)
 
 Of course, a particular system will probably only need one of these.
-In practice, the relevant binaries are usually part of 
+For integrated desktops, the relevant binaries are usually part of 
 the desktop environment, and you shouldn't need to install anything
 extra.
 
@@ -183,6 +189,20 @@ the desktop draws over it. However, it can sometimes be made visible
 by disabling desktop painting. This method is mostly suitable for very
 minimal X set-ups using old-fashioned window managers like `twm`.
 
+### feh 
+
+This method uses the command `feh --bg-fill`. Naturally, it will only
+work if `feh` is installed, and if the X root window is visible. The
+root window is not normally visible on Gnome and similar desktop setups, 
+because
+the desktop draws over it. 
+This method is mostly suitable for very
+minimal X set-ups using old-fashioned window managers like `twm`.
+
+`feh` will work in the same situations in which `xview` will work. 
+However, `feh` often makes a better job of scaling images to fit the
+root window.
+
 ### xfce4 
 
 This method uses `xfconf-query` to set the backgrounds on up to two
@@ -285,6 +305,32 @@ is larger than 1.5, and portrait if it is less than 0.67. These
 numbers are intended to include most images that can reasonably be displayed
 on a screen of the appropriate orientation.
 
+### Old-style window managers
+
+Old-style window managers like TWM, and OpenBox typically do not draw
+over the root window. The 'feh' and 'xview' methods work with these
+window managers but, of course, the relevant utilities must be
+installed.
+
+Modern window managers typically create their own windows that completely
+obscure the root window. `feh` and `xview` usually don't work in
+those situations. It is necessary to seek out a method that is
+specific to the window manager or desktop. 
+
+### Wayland support
+
+The method for changing the background will depend on the Wayland compositor. 
+There is, in principle, a Wayland extension that provides access to the
+background, but not all compositors support it. On Gnome systems, the
+`gnome-shell` method continues to work with Wayland. I don't have the
+infrastructure, or the time, to test other environments.
+
+### KDE support
+
+I don't know of any robust way to change the background in KDE environments.
+By 'robust' I mean 'working the same on a range of versions'. If anybody
+does know, please tell me, and I will add it to LBC.
+
 ## Limitations
 
 At present image size/aspect checks only work on JPEG files. It would be
@@ -355,6 +401,12 @@ platforms now require these. They can be added by using the
 `EXTRA_CFLAGS` and `EXTRA_LDFLAGS` env vars if necessary. Some minor
 documentation fixes. Tidied up the compiler settings to remove pointless
 warning messages.
+<p/>
+
+<b>Version 2.0e, December 2024</b><br/>
+Removed redudant code for handling zipfiles. Fixed the 'xview' method,
+which has been broken for a while. Added 'feh' method. Added
+GPL licence. Tidied up documentation.
 <p/>
 
 

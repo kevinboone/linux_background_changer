@@ -4,7 +4,7 @@
 .\" included, and that this copyright notice
 .\" is retained.
 .\"
-.TH lbc 1 "June 2024"
+.TH lbc 1 "December 2024"
 .SH NAME
 Linux Background Changer, LBC \- a stand-alone screen background changer for various linux desktops
 .SH SYNOPSIS
@@ -48,13 +48,21 @@ and systems derived from it.
 
 .TP
 .BI xview 
-This method uses the command "xview --onroot". Naturally, it will only
+This method uses the command "xview -onroot -fullscreen". Naturally, it will only
 work if xview is installed, and if the X root window is visible. The
 root window is not normally visible on Gnome and similar desktop setups, 
 because
 the desktop draws over it. However, it can sometimes be made visible
 by disabling desktop painting. This method is mostly suitable for very
-minimal X set-ups using old-fashioned window managers.
+minimal X set-ups using old-style window managers.
+.LP
+
+.TP
+.BI feh 
+This method uses the command "feh --bg-fill". Naturally, it will only
+work if feh is installed, and if the X root window is visible. 
+This method is mostly suitable for very
+minimal X set-ups using old-style window managers.
 .LP
 
 .TP

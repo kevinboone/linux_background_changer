@@ -27,6 +27,7 @@ static void changer_method_gnome2 (const Changer *self); //FWD
 static void changer_method_gnome_shell (const Changer *self); //FWD
 static void changer_method_xfce4 (const Changer *self); //FWD
 static void changer_method_xview (const Changer *self); //FWD
+static void changer_method_feh (const Changer *self); //FWD
 static void changer_method_cmd (const Changer *self); //FWD
 
 /*============================================================================
@@ -56,7 +57,7 @@ typedef void (*ChangerFn) (const Changer *self);
 typedef struct _ChangeMethod ChangeMethod;
 struct _ChangeMethod
   {
-const char *name;
+  const char *name;
   const char *desc;
   ChangerFn fn;
   };
@@ -66,11 +67,12 @@ const char *name;
 //   constants
 static ChangeMethod methods[] =
   {
-  {"xview", "set image on X root window using xview", changer_method_xview},
-  {"gnome2", "Gnome 2 gconftool-2 method", changer_method_gnome2},
-  {"gnome-shell", "Gnome 3 gettings method", changer_method_gnome_shell},
-  {"xfce4", "Xfce4 desktop method", changer_method_xfce4},
-  {"cmd", "User-defined command", changer_method_cmd},
+  {"feh",         "set image on X root window using feh", changer_method_feh},
+  {"gnome-shell", "Gnome 3 gsettings method", changer_method_gnome_shell},
+  {"gnome2",      "Gnome 2 gconftool-2 method", changer_method_gnome2},
+  {"xfce4",       "Xfce4 desktop method", changer_method_xfce4},
+  {"xview",       "set image on X root window using xview", changer_method_xview},
+  {"cmd",         "User-defined command", changer_method_cmd},
   {NULL, NULL, NULL}
   };
 
@@ -120,10 +122,22 @@ void changer_destroy (Changer *self)
 void changer_dump_methods (FILE *f)
   {
   KLOG_IN
+  int maxlen = 0;
   ChangeMethod *method = &methods[0];
   while (method->name)
     {
-    fprintf (f, "%s: %s\n", method->name, method->desc); 
+    int len = strlen (method->name); 
+    if (len > maxlen) maxlen = len;
+    method++;
+    }
+  method = &methods[0];
+  while (method->name)
+    {
+    int len = strlen (method->name); 
+    int pad = maxlen - len + 1;
+    fprintf (f, "%s:", method->name); 
+    for (int i = 0; i < pad; i++) fputc (' ', f);
+    fprintf (f, "%s\n", method->desc); 
     method++;
     }
   KLOG_OUT
@@ -353,6 +367,35 @@ void changer_method_xfce4 (const Changer *self)
 
 /*============================================================================
   
+  changer_method_feh
+
+  ==========================================================================*/
+void changer_method_feh (const Changer *self)
+  {
+  KLOG_IN
+  assert (self != NULL);
+  klog_debug (KLOG_CLASS, "Change using xview method");
+ 
+  const KPath *img_path = changer_get_nth_image (self, 0); 
+
+  char *filename = (char *)kpath_to_utf8 (img_path);
+
+  char *cmd;
+  asprintf (&cmd, "feh --bg-fill \"%s\"",  filename);
+
+  if (system (cmd) != 0)
+    {
+    klog_error (KLOG_CLASS, "Error executing command '%s'", cmd);
+    }
+
+  free (cmd);
+  free (filename);
+  KLOG_OUT
+  }
+
+
+/*============================================================================
+  
   changer_method_xview
 
   ==========================================================================*/
@@ -365,8 +408,16 @@ void changer_method_xview (const Changer *self)
   const KPath *img_path = changer_get_nth_image (self, 0); 
 
   char *filename = (char *)kpath_to_utf8 (img_path);
-  printf ("image = %s\n", filename);
 
+  char *cmd;
+  asprintf (&cmd, "xview -onroot -fullscreen -quiet \"%s\"",  filename);
+
+  if (system (cmd) != 0)
+    {
+    klog_error (KLOG_CLASS, "Error executing command '%s'", cmd);
+    }
+
+  free (cmd);
   free (filename);
   KLOG_OUT
   }

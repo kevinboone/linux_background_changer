@@ -1,5 +1,5 @@
 NAME      := lbc
-VERSION   := 2.0d
+VERSION   := 2.0e
 LIBS      := -ljpeg -lm ${EXTRA_LIBS} 
 KLIB      := klib
 KLIB_INC  := $(KLIB)/include
