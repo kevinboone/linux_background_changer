@@ -4,7 +4,7 @@
   
   programcontext.c
 
-  Copyright (c)2013-2024 Kevin Boone. Distributed under the terms of the
+  Copyright (c)2013-2025 Kevin Boone. Distributed under the terms of the
   GNU Public Licence, v3.0
 
   ==========================================================================*/
@@ -281,7 +281,7 @@ BOOL program_context_parse_command_line (ProgramContext *self,
    while (ret)
      {
      int option_index = 0;
-     opt = getopt_long (argc, argv, "a:vd:fm:npw:h:i:s", long_options, 
+     opt = getopt_long (argc, argv, "a:c:vd:fm:npw:h:i:s", long_options, 
             &option_index);
 
      if (opt == -1) break;
@@ -335,7 +335,7 @@ BOOL program_context_parse_command_line (ProgramContext *self,
   if (PCGB (self, "show-version", FALSE))
     {
     printf ("%s: %s version %s\n", argv[0], NAME, VERSION);
-    printf ("Copyright (c)2013-2024 Kevin Boone\n");
+    printf ("Copyright (c)2013-2025 Kevin Boone\n");
     printf ("Distributed under the terms of the GPL v3.0\n");
     ret = FALSE;
     }

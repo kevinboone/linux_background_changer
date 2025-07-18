@@ -2,7 +2,7 @@
 
 A wallpaper changer for various Linux (and NetBSD) desktop environments.
 
-Version 2.0e, December 2024
+Version 2.0f, July 2025 
 
 ## What is this?
 
@@ -407,6 +407,11 @@ warning messages.
 Removed redudant code for handling zipfiles. Fixed the 'xview' method,
 which has been broken for a while. Added 'feh' method. Added
 GPL licence. Tidied up documentation.
+<p/>
+
+<b>Version 2.0f, July 2025</b><br/>
+Fixed stupid bug where the '-c' command-line switch wasn't recognized.
+Added note about Antix.
 <p/>
 
 

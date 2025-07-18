@@ -4,7 +4,7 @@
   
   main.c
 
-  Copyright (c)2013-2024 Kevin Boone. Distributed under the terms of the
+  Copyright (c)2013-2025 Kevin Boone. Distributed under the terms of the
   GNU Public Licence, v3.0
 
   ==========================================================================*/
