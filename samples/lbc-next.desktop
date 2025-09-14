@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Next desktop background
+Comment=Linux Background Changer -- next desktop background
+Exec=lbc --next
+Icon=lbc
+Terminal=false
+Type=Application
+Categories=Utilities;

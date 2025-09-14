@@ -244,6 +244,18 @@ The `samples/` directory has an example desktop file for this purpose,
 but it will need
 to be adjusted to suit the installation.
 
+### Adding a 'Next background' menu item to the desktop
+
+It's nice to have something to click, that changes to the next background
+image, rather than running `lbc --next` in a terminal. In the `samples\`
+directory there is a file `lbc-next.desktop` which can be copied to wherever
+the desktop looks for such files (typically `/usr/share/applications`) and an
+image `lbc.png`, which can be copied to wherever the desktop looks for icons
+(typically `/usr/share/pixmaps`). With these things in place, you can configure
+the desktop to map the `.desktop` file to some keystroke or menu action.
+Unfortunately, there's no universal way to do this -- it depends on the
+desktop. 
+
 ### Signals 
 
 `lbc` traps SIGUSR1 and SIGUSR2 signals. These move to the next and

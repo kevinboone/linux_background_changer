@@ -30,7 +30,7 @@ just a problem with LBC: using images that don't match the screen aspect ratio
 fails with the AntiX graphical utility as well.
 
 This is a known problem in AntiX, but it seems only to have been reported in
-May 2025, so there is no fix yet. Using Antix with sessinon types other than
+May 2025, so there is no fix yet. Using Antix with session types other than
 `zzz` might not have this problem.
 
 
